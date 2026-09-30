@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catálogo de productos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="cabecera">
+    <h1>Catálogo de productos</h1>
+    <p>Cargá tu inventario, buscá lo que necesitás y controlá el stock.</p>
+  </header>
+
+  <main class="pagina">
+    <!-- Resumen de inventario -->
+    <section class="resumen" aria-labelledby="t-resumen">
+      <h2 id="t-resumen" class="visualmente-oculto">Resumen de inventario</h2>
+      <div class="dato">
+        <span class="dato-valor" id="res-productos">0</span>
+        <span class="dato-nombre">Productos</span>
+      </div>
+      <div class="dato">
+        <span class="dato-valor" id="res-unidades">0</span>
+        <span class="dato-nombre">Unidades en stock</span>
+      </div>
+      <div class="dato dato-principal">
+        <span class="dato-valor" id="res-valor">$ 0</span>
+        <span class="dato-nombre">Valor del inventario</span>
+      </div>
+      <div class="dato">
+        <span class="dato-valor" id="res-bajo">0</span>
+        <span class="dato-nombre">Con stock bajo</span>
+      </div>
+      <div class="dato">
+        <span class="dato-valor" id="res-sin">0</span>
+        <span class="dato-nombre">Sin stock</span>
+      </div>
+    </section>
+
+    <div class="cuerpo">
+      <aside class="lateral">
+        <!-- Alta de producto -->
+        <section class="panel" aria-labelledby="t-alta">
+          <h2 id="t-alta">Agregar producto</h2>
+          <form id="form-alta" novalidate>
+            <div class="campo">
+              <label for="alta-nombre">Nombre</label>
+              <input id="alta-nombre" type="text" placeholder="Ej: Teclado mecánico" required>
+            </div>
+            <div class="campo">
+              <label for="alta-categoria">Categoría</label>
+              <input id="alta-categoria" type="text" list="lista-categorias" placeholder="Ej: Periféricos" required>
+              <datalist id="lista-categorias"></datalist>
+            </div>
+            <div class="fila">
+              <div class="campo">
+                <label for="alta-precio">Precio</label>
+                <input id="alta-precio" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0,00" required>
+              </div>
+              <div class="campo">
+                <label for="alta-stock">Stock</label>
+                <input id="alta-stock" type="number" min="0" step="1" inputmode="numeric" placeholder="0" required>
+              </div>
+            </div>
+            <p id="alta-error" class="error" role="alert" hidden></p>
+            <button type="submit" class="boton">Agregar producto</button>
+          </form>
+        </section>
+
+        <!-- Buscador y filtros -->
+        <section class="panel" aria-labelledby="t-filtros">
+          <h2 id="t-filtros">Buscar y filtrar</h2>
+          <form id="form-filtros">
+            <div class="campo">
+              <label for="f-nombre">Nombre</label>
+              <input id="f-nombre" type="search" placeholder="Buscar por nombre">
+            </div>
+            <div class="campo">
+              <label for="f-categoria">Categoría</label>
+              <select id="f-categoria">
+                <option value="">Todas</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="f-stock">Stock</label>
+              <select id="f-stock">
+                <option value="">Todos</option>
+                <option value="con">Con stock</option>
+                <option value="bajo">Stock bajo (5 o menos)</option>
+                <option value="sin">Sin stock</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="f-precio">Precio máximo</label>
+              <input id="f-precio" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Sin límite">
+            </div>
+            <button type="reset" class="boton boton-secundario" id="f-limpiar">Limpiar filtros</button>
+          </form>
+        </section>
+      </aside>
+
+      <!-- Listado de productos -->
+      <section class="listado" aria-labelledby="t-productos">
+        <div class="listado-cabecera">
+          <h2 id="t-productos">Productos</h2>
+          <p id="conteo" aria-live="polite"></p>
+        </div>
+        <div class="tabla-contenedor">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Categoría</th>
+                <th scope="col" class="num">Precio</th>
+                <th scope="col" class="num">Stock</th>
+                <th scope="col"><span class="visualmente-oculto">Acciones</span></th>
+              </tr>
+            </thead>
+            <tbody id="tabla-productos"></tbody>
+          </table>
+        </div>
+        <p id="vacio" class="vacio" hidden></p>
+      </section>
+    </div>
+  </main>
+
+  <!-- Se carga el JavaScript compilado desde src/index.ts (ver tsconfig) -->
+  <script type="module" src="dist/index.js"></script>
+</body>
+</html>
