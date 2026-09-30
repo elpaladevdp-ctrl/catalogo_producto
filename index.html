@@ -46,7 +46,7 @@
         <!-- Alta de producto -->
         <section class="panel" aria-labelledby="t-alta">
           <h2 id="t-alta">Agregar producto</h2>
-          <form id="form-alta" novalidate>
+          <form id="form-alta" novalidate onsubmit="return false">
             <div class="campo">
               <label for="alta-nombre">Nombre</label>
               <input id="alta-nombre" type="text" placeholder="Ej: Teclado mecánico" required>
@@ -74,7 +74,7 @@
         <!-- Buscador y filtros -->
         <section class="panel" aria-labelledby="t-filtros">
           <h2 id="t-filtros">Buscar y filtrar</h2>
-          <form id="form-filtros">
+          <form id="form-filtros" onsubmit="return false">
             <div class="campo">
               <label for="f-nombre">Nombre</label>
               <input id="f-nombre" type="search" placeholder="Buscar por nombre">
@@ -129,6 +129,17 @@
   </main>
 
   <!-- Se carga el JavaScript compilado desde src/index.ts (ver tsconfig) -->
-  <script type="module" src="dist/index.js"></script>
+  <script src="dist/index.js" defer></script>
+  <script defer>
+    // Si el programa no cargó, se muestra un aviso en lugar de fallar en silencio.
+    window.addEventListener("load", function () {
+      if (window.catalogoCargado) return;
+      var aviso = document.createElement("p");
+      aviso.setAttribute("role", "alert");
+      aviso.style.cssText = "margin:0;padding:1rem 1.5rem;background:#fbe0dd;color:#8c1d18;font-weight:600";
+      aviso.textContent = "No se pudo cargar dist/index.js. Ejecutá 'npx tsc' en la carpeta del proyecto y recargá la página.";
+      document.body.prepend(aviso);
+    });
+  </script>
 </body>
 </html>

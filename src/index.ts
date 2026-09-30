@@ -1,4 +1,5 @@
-export {};
+// Script clásico (sin import/export) envuelto para no ensuciar el ámbito global.
+(() => {
 
 // ---------- Tipos y constantes ----------
 interface Producto {
@@ -93,7 +94,18 @@ formAlta.addEventListener("submit", (e) => {
     return mostrarError("El stock debe ser un número entero (0 o más).");
   }
 
-  productos.push({ id: siguienteId(), nombre, categoria, precio, stock });
+  const existente = productos.find(
+    (p) =>
+      p.nombre.toLowerCase() === nombre.toLowerCase() &&
+      p.categoria.toLowerCase() === categoria.toLowerCase()
+  );
+  if (existente) {
+    // Mismo producto: se suman las unidades y se actualiza el precio.
+    existente.stock += stock;
+    existente.precio = precio;
+  } else {
+    productos.push({ id: siguienteId(), nombre, categoria, precio, stock });
+  }
   guardar();
 
   altaError.hidden = true;
@@ -220,7 +232,13 @@ function crearFila(p: Producto): HTMLTableRowElement {
   const estado = document.createElement("span");
   estado.className = "estado " + (p.stock === 0 ? "sin" : p.stock <= STOCK_BAJO ? "bajo" : "ok");
   estado.textContent = String(p.stock);
-  celdaStock.append(estado);
+  const menos = crearBotonStock("−", `Restar una unidad de ${p.nombre}`, () => cambiarStock(p.id, -1));
+  menos.disabled = p.stock === 0;
+  const mas = crearBotonStock("+", `Sumar una unidad a ${p.nombre}`, () => cambiarStock(p.id, 1));
+  const control = document.createElement("div");
+  control.className = "stock-control";
+  control.append(menos, estado, mas);
+  celdaStock.append(control);
 
   const celdaAcciones = document.createElement("td");
   celdaAcciones.className = "num";
@@ -236,6 +254,24 @@ function crearFila(p: Producto): HTMLTableRowElement {
   return fila;
 }
 
+function crearBotonStock(texto: string, etiqueta: string, accion: () => void): HTMLButtonElement {
+  const boton = document.createElement("button");
+  boton.type = "button";
+  boton.className = "stock-boton";
+  boton.textContent = texto;
+  boton.setAttribute("aria-label", etiqueta);
+  boton.addEventListener("click", accion);
+  return boton;
+}
+
+function cambiarStock(id: number, delta: number): void {
+  const producto = productos.find((p) => p.id === id);
+  if (!producto) return;
+  producto.stock = Math.max(0, producto.stock + delta);
+  guardar();
+  render();
+}
+
 function eliminar(id: number): void {
   productos = productos.filter((p) => p.id !== id);
   guardar();
@@ -244,3 +280,7 @@ function eliminar(id: number): void {
 
 // ---------- Inicio ----------
 render();
+
+// Avisa a la página de que el script cargó bien.
+(window as unknown as { catalogoCargado?: boolean }).catalogoCargado = true;
+})();

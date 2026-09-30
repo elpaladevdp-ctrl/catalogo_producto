@@ -46,9 +46,8 @@ h1, h2 {
 .cabecera {
   background: var(--tinta);
   color: #fff;
-  padding: 2.5rem 1.5rem 3.5rem;
+  padding: 2.5rem max(1.5rem, calc((100% - 1200px) / 2 + 1.5rem)) 3.5rem;
 }
-.cabecera > * { max-width: 1200px; margin-inline: auto; }
 .cabecera h1 {
   font-size: clamp(2rem, 5vw, 3.4rem);
   font-weight: 800;
@@ -226,4 +225,29 @@ tbody tr:last-child td { border-bottom: 0; }
   .dato { border-top: 1px solid var(--linea); }
   .dato-principal { grid-column: 1 / -1; border-top: 0; }
   .dato:nth-of-type(odd):not(.dato-principal) { border-left: 0; }
+}
+
+/* ---------- Control de stock (− / +) ---------- */
+.stock-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.stock-boton {
+  width: 1.9rem;
+  height: 1.9rem;
+  font: inherit;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--tinta);
+  background: #fff;
+  border: 1px solid #b7c0cf;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.stock-boton:hover:not(:disabled) { background: var(--fondo); border-color: var(--acento); }
+.stock-boton:disabled { opacity: 0.4; cursor: not-allowed; }
+.stock-boton:focus-visible {
+  outline: 3px solid rgba(44, 86, 224, 0.4);
+  outline-offset: 1px;
 }
