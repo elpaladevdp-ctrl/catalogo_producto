@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
+   <button id="boton-prueba" type="button">Probar conexión</button>
+<p id="mensaje-prueba"></p>
   <header class="cabecera">
     <h1>Catálogo de productos</h1>
     <p>Cargá tu inventario, buscá lo que necesitás y controlá el stock.</p>
@@ -131,6 +133,9 @@
   <!-- Se carga el JavaScript compilado desde src/index.ts (ver tsconfig) -->
   <script src="dist/index.js" defer></script>
   <script defer>
+
+
+
     // Si el programa no cargó, se muestra un aviso en lugar de fallar en silencio.
     window.addEventListener("load", function () {
       if (window.catalogoCargado) return;

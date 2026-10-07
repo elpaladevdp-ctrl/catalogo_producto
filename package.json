@@ -12,5 +12,13 @@
   "type": "commonjs",
   "devDependencies": {
     "typescript": "^7.0.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elpaladevdp-ctrl/catalogo_producto.git"
+  },
+  "bugs": {
+    "url": "https://github.com/elpaladevdp-ctrl/catalogo_producto/issues"
+  },
+  "homepage": "https://github.com/elpaladevdp-ctrl/catalogo_producto#readme"
 }
