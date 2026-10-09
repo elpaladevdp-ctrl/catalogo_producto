@@ -237,10 +237,12 @@
     // Avisa a la página de que el script cargó bien.
     window.catalogoCargado = true;
 })();
+// parte boton
 const botonPrueba = document.querySelector("#boton-prueba");
 const mensajePrueba = document.querySelector("#mensaje-prueba");
-if (botonPrueba !== null && mensajePrueba !== null) {
+const buscador = document.querySelector("#f-nombre");
+if (botonPrueba !== null && mensajePrueba !== null && buscador !== null) {
     botonPrueba.addEventListener("click", () => {
-        mensajePrueba.textContent = "¡La conexión funciona!";
+        mensajePrueba.textContent = buscador.value;
     });
 }
