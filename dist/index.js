@@ -246,3 +246,112 @@ if (botonPrueba !== null && mensajePrueba !== null && buscador !== null) {
         mensajePrueba.textContent = buscador.value;
     });
 }
+const productos = [
+    { id: 1, nombre: "Teclado", categoria: "Periféricos", precio: 25000, stock: 8 },
+    { id: 2, nombre: "Mouse", categoria: "Periféricos", precio: 15000, stock: 0 },
+    { id: 3, nombre: "Monitor", categoria: "Pantallas", precio: 180000, stock: 4 }
+];
+const pepe = [
+    { id: 1, nombre: "Pepon", apellido: "Papuda", dni: 48, email: "PapudaPepon@gmail.com", numero: 12 },
+    { id: 2, nombre: "Pepe", apellido: "Pepon", dni: 49, email: "Pepe@gmail.com" },
+    { id: 3, nombre: "Pepubi", apellido: "Rago", dni: 49091208, email: "franrago2008@gmail.com", numero: 1157497099 },
+    { id: 4, nombre: "Pepito", apellido: "Gonzalez", dni: 50123456, email: "pepito@gmail.com", numero: 1134567890 },
+    { id: 5, nombre: "Pepo", apellido: "Rodriguez", dni: 50987654, email: "pepo@gmail.com" }
+];
+pepe.push({
+    id: 6,
+    nombre: "Pepe",
+    apellido: "Papuda",
+    dni: 50123456,
+    email: "pepe@gmail.com",
+    numero: 1145678901
+});
+const proyecto_pepe = { id: 1, nombre: "Proyecto de los Pepes Unidos(PPU)" };
+const proyecto_pepubi = { id: 1, nombre: "Proyecto de los Mastodontes Pepubis" };
+const alumnos = [
+    {
+        id: 1,
+        nombre: "Juan Pepe",
+        email: "juan@gmail.com",
+        proyecto: proyecto_pepe
+    },
+    {
+        id: 2,
+        nombre: "Maria Pepubi",
+        proyecto: proyecto_pepubi
+    },
+    {
+        id: 3,
+        nombre: "Carlos Lopez",
+        email: "carlos@gmail.com"
+    },
+    {
+        id: 4,
+        nombre: "Ana Martínez"
+    }
+];
+const contenedorAlumnos = document.querySelector("#seccion-alumnos");
+if (contenedorAlumnos === null) {
+    throw new Error("No se encontró el contenedor seccion-alumnos en el HTML.");
+}
+function renderizarAlumnos(lista) {
+    if (!contenedorAlumnos)
+        return;
+    contenedorAlumnos.replaceChildren();
+    if (lista.length === 0) {
+        contenedorAlumnos.textContent = "No hay alumnos para mostrar.";
+        return;
+    }
+    for (const alumno of lista) {
+        const tarjeta = document.createElement("article");
+        tarjeta.className = "tarjeta";
+        const titulo = document.createElement("h3");
+        titulo.textContent = alumno.nombre;
+        const detalleProyecto = document.createElement("p");
+        if (alumno.proyecto) {
+            detalleProyecto.textContent = `Proyecto: ${alumno.proyecto.nombre}`;
+        }
+        else {
+            detalleProyecto.textContent = "Proyecto: Sin proyecto asignado";
+        }
+        tarjeta.append(titulo, detalleProyecto);
+        if (alumno.email) {
+            const detalleEmail = document.createElement("p");
+            detalleEmail.textContent = `Email: ${alumno.email}`;
+            tarjeta.append(detalleEmail);
+        }
+        contenedorAlumnos.append(tarjeta);
+    }
+}
+renderizarAlumnos(alumnos);
+//actividad 4
+const catalogo = document.querySelector("#catalogo");
+const esCaro = (producto) => producto.precio > 50000;
+function crearTarjetaProducto(producto) {
+    const tarjeta = document.createElement("article");
+    tarjeta.className = "tarjeta";
+    if (esCaro(producto)) {
+        tarjeta.style.border = "2px solid red";
+        tarjeta.style.backgroundColor = "#ffe6e6";
+    }
+    const titulo = document.createElement("h3");
+    titulo.textContent = producto.nombre;
+    const detalle = document.createElement("p");
+    detalle.textContent = `${producto.categoria} | $${producto.precio} | Stock: ${producto.stock}`;
+    tarjeta.append(titulo, detalle);
+    return tarjeta;
+}
+function renderizarProductos(lista) {
+    if (!catalogo)
+        return;
+    catalogo.replaceChildren();
+    if (lista.length === 0) {
+        catalogo.textContent = "No hay productos para mostrar.";
+        return;
+    }
+    for (const producto of lista) {
+        const tarjetaArmada = crearTarjetaProducto(producto);
+        catalogo.append(tarjetaArmada);
+    }
+}
+renderizarProductos(productos);
